@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja" xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="UTF-8" />
+    <title>csstransformutils.js - CSS Transform Utils</title>
+  </head>
+  <body>
+    <h1>csstransformutils.js - CSS Transform Utils</h1>
+
+    <div id="aaa" style="background: #ffff00; position:fixed; left:100px; top:200px;">
+      <p>DIV#aaa</p>
+        <div id="bbb" style="background:#00ffff; transform: matrix(0.5,0,0,0.5,10,-30) rotate(30deg) translate(50px,20px) skew(20deg,10deg) scale(2); transform-origin: 40% 80%;">
+        <p>DIV#bbb</p>
+        <canvas id="ccc" style="background:red; width:200px; height:100px; border: 15px solid green; padding:20px; margin: 10px;" width="200" height="100">
+        </canvas>
+      </div>
+    </div>
+
+    <script src="csstransformutils.js"></script>
+    <script>
+        var ccc = document.getElementById("ccc");
+
+        // canvasのマウスカーソルがある位置に点を打つ。
+        var ctx = ccc.getContext("2d");
+        ccc.addEventListener("mousemove", function(e){
+            var posOnElem = misohena.CSSTransformUtils.convertPointFromPageToNodeContentArea(ccc, e.pageX, e.pageY);
+            if(posOnElem){
+                ctx.fillStyle = "#008080";
+                ctx.fillRect(0,0,ccc.width, ccc.height);
+
+                ctx.fillStyle = "black";
+                ctx.font = "24px sans-serif";
+                ctx.textAlign = "left";
+                ctx.textBaseline = "top";
+                ctx.fillText("CANVAS#ccc",0,0);
+                ctx.fillText("<-(border,padding)",0,30);
+
+                ctx.fillStyle = "white";
+                ctx.fillRect(posOnElem[0]-3, posOnElem[1]-3, 6, 6);
+            }
+        }, false);
+    </script>
+
+  </body>
+</html>
